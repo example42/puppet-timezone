@@ -34,7 +34,7 @@ Alternatively you can define the ::timezone top scope variable somewhere (in an 
           hw_utc   => true,
         }
 
-or:
+  or:
 
         $::timezone = 'Europe/Rome'
         $::timezone_hw_utc = true
