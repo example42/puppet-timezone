@@ -79,7 +79,7 @@ class timezone(
     ''      => $::operatingsystem ? {
       /(?i:RedHat|Centos|Scientific|Fedora|Amazon|Linux)/ => 'tzdata-update',
       /(?i:Ubuntu|Debian|Mint)/                           => 'dpkg-reconfigure -f noninteractive tzdata',
-      /(?i:SLES|OpenSuSE)/                                => "ln -sf /usr/share/zoneinfo/${timezone} /etc/localtime",
+      /(?i:SLES|OpenSuSE)/                                => "zic -l ${timezone}",
       freebsd                                             => "cp /usr/share/zoneinfo/${timezone} /etc/localtime && adjkerntz -a", 
     },
     default => $set_timezone_command,
