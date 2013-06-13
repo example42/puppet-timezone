@@ -80,6 +80,7 @@ class timezone(
       /(?i:RedHat|Centos|Scientific|Fedora|Amazon|Linux)/ => 'tzdata-update',
       /(?i:Ubuntu|Debian|Mint)/                           => 'dpkg-reconfigure -f noninteractive tzdata',
       /(?i:SLES|OpenSuSE)/                                => "zic -l ${timezone}",
+      /(?i:OpenBSD)/                                      => "ln -fs /usr/share/zoneinfo/${timezone} /etc/localtime",
       freebsd                                             => "cp /usr/share/zoneinfo/${timezone} /etc/localtime && adjkerntz -a", 
     },
     default => $set_timezone_command,
