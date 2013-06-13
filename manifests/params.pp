@@ -24,7 +24,7 @@ class timezone::params {
     /(?i:RedHat|Centos|Scientific|Fedora|Amazon|Linux)/ => '/etc/sysconfig/clock',
     /(?i:Ubuntu|Debian|Mint)/                           => '/etc/timezone',
     /(?i:SLES|OpenSuSE)/                                => '/etc/sysconfig/clock',
-    freebsd                                             => '/etc/timezone-puppet',
+    /(?i:FreeBSD|OpenBSD)/                              => '/etc/timezone-puppet',
   }
 
   $config_file_mode = $::operatingsystem ? {
