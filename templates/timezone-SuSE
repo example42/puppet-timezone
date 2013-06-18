@@ -8,7 +8,7 @@
 # Set to "-u" if your system clock is set to UTC, and to "--localtime"
 # if your clock runs that way.
 #
-<% if hw_utc == true -%>
+<% if @hw_utc == true -%>
 HWCLOCK="-u"
 <% else -%>
 HWCLOCK="--localtime"
@@ -34,5 +34,5 @@ SYSTOHC="yes"
 # Timezone (e.g. CET)
 # (this will set /usr/lib/zoneinfo/localtime)
 #
-TIMEZONE="<%= timezone %>"
+TIMEZONE="<%= @timezone %>"
 DEFAULT_TIMEZONE="US/Eastern"
