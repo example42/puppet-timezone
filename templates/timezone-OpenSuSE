@@ -79,6 +79,6 @@ USE_ADJUST="no"
 # the /etc/localtime file, YaST does that or you will need to do
 # this manually by calling zic -l.
 #
-TIMEZONE="<%= timezone %>"
-DEFAULT_TIMEZONE="<%= timezone %>"
-ZONE="<%= timezone %>"
+TIMEZONE="<%= @timezone %>"
+DEFAULT_TIMEZONE="<%= @timezone %>"
+ZONE="<%= @timezone %>"
