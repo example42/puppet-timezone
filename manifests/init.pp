@@ -120,7 +120,7 @@ class timezone(
     noop    => $timezone::bool_noops,
   }
 
-  if $::hardwareisa != 'sparc' {
+  if $::hardwareisa != 'sparc' and $::kernel != 'SunOS' {
     exec { 'set-timezone':
       command     => $timezone::real_set_timezone_command,
       path        => '/usr/bin:/usr/sbin:/bin:/sbin',
