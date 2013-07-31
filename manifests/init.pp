@@ -120,12 +120,14 @@ class timezone(
     noop    => $timezone::bool_noops,
   }
 
-  exec { 'set-timezone':
-    command     => $timezone::real_set_timezone_command,
-    path        => '/usr/bin:/usr/sbin:/bin:/sbin',
-    require     => File['timezone'],
-    subscribe   => File['timezone'],
-    refreshonly => true,
+  if $::hardwareisa != 'sparc' {
+    exec { 'set-timezone':
+      command     => $timezone::real_set_timezone_command,
+      path        => '/usr/bin:/usr/sbin:/bin:/sbin',
+      require     => File['timezone'],
+      subscribe   => File['timezone'],
+      refreshonly => true,
+    }
   }
 
 }
