@@ -82,6 +82,7 @@ class timezone(
       /(?i:SLES|OpenSuSE)/                                => "zic -l ${timezone}",
       /(?i:OpenBSD)/                                      => "ln -fs /usr/share/zoneinfo/${timezone} /etc/localtime",
       freebsd                                             => "cp /usr/share/zoneinfo/${timezone} /etc/localtime && adjkerntz -a",
+      Solaris)						  => "rtc -z ${timezone} && rtc -c",
     },
     default => $set_timezone_command,
   }
