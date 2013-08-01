@@ -82,6 +82,7 @@ class timezone(
       /(?i:SLES|OpenSuSE)/                                => "zic -l ${timezone}",
       /(?i:OpenBSD)/                                      => "ln -fs /usr/share/zoneinfo/${timezone} /etc/localtime",
       freebsd                                             => "cp /usr/share/zoneinfo/${timezone} /etc/localtime && adjkerntz -a",
+      /(?i:Solaris)/					  => "rtc -z ${timezone} && rtc -c",
     },
     default => $set_timezone_command,
   }
@@ -119,12 +120,14 @@ class timezone(
     noop    => $timezone::bool_noops,
   }
 
-  exec { 'set-timezone':
-    command     => $timezone::real_set_timezone_command,
-    path        => '/usr/bin:/usr/sbin:/bin:/sbin',
-    require     => File['timezone'],
-    subscribe   => File['timezone'],
-    refreshonly => true,
+  if $::hardwareisa != 'sparc' and $::kernel != 'SunOS' {
+    exec { 'set-timezone':
+      command     => $timezone::real_set_timezone_command,
+      path        => '/usr/bin:/usr/sbin:/bin:/sbin',
+      require     => File['timezone'],
+      subscribe   => File['timezone'],
+      refreshonly => true,
+    }
   }
 
 }
