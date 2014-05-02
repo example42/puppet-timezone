@@ -37,7 +37,8 @@ class timezone::params {
   }
 
   $config_file_group = $::operatingsystem ? {
-    default => 'root',
+    'FreeBSD' => 'wheel',
+    default   => 'root',
   }
 
   $source = ''
