@@ -57,4 +57,4 @@ Alternatively you can define the ::timezone top scope variable somewhere (in an 
 
 
 
-[![Build Status](https://travis-ci.org/example42/puppet-timezone.png?branch=master)](https://travis-ci.org/example42/puppet-timezone)
+[![Build Status](https://travis-ci.org/aleivag/puppet-timezone.svg?branch=master)](https://travis-ci.org/aleivag/puppet-timezone)
