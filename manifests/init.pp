@@ -56,6 +56,7 @@
 # [*config_file_group*]
 #   Main configuration file path group
 #
+
 class timezone(
   $timezone             = params_lookup( 'timezone', 'global' ),
   $hw_utc               = params_lookup( 'hw_utc' ),
@@ -83,6 +84,7 @@ class timezone(
       /(?i:OpenBSD)/                                      => "ln -fs /usr/share/zoneinfo/${timezone} /etc/localtime",
       /(?i:FreeBSD)/                                      => "cp /usr/share/zoneinfo/${timezone} /etc/localtime && adjkerntz -a",
       /(?i:Solaris)/                                      => "rtc -z ${timezone} && rtc -c",
+      /(?i:windows)/                                      => "tzutil /s '${timezone}'",
     },
     default => $set_timezone_command,
   }
@@ -107,26 +109,34 @@ class timezone(
     default   => template($timezone::template),
   }
 
-  file { 'timezone':
-    ensure  => present,
-    path    => $timezone::config_file,
-    mode    => $timezone::config_file_mode,
-    owner   => $timezone::config_file_owner,
-    group   => $timezone::config_file_group,
-    source  => $timezone::manage_file_source,
-    content => $timezone::manage_file_content,
-    replace => $timezone::manage_file_replace,
-    audit   => $timezone::manage_audit,
-    noop    => $timezone::bool_noops,
-  }
-
-  if $::hardwareisa != 'sparc' and $::kernel != 'SunOS' {
+  if $::operatingsystem == 'windows'{
     exec { 'set-timezone':
-      command     => $timezone::real_set_timezone_command,
-      path        => '/usr/bin:/usr/sbin:/bin:/sbin',
-      require     => File['timezone'],
-      subscribe   => File['timezone'],
-      refreshonly => true,
+      command  => $timezone::real_set_timezone_command,
+      provider => powershell
+    }
+  } else {
+
+    file { 'timezone':
+      ensure  => present,
+      path    => $timezone::config_file,
+      mode    => $timezone::config_file_mode,
+      owner   => $timezone::config_file_owner,
+      group   => $timezone::config_file_group,
+      source  => $timezone::manage_file_source,
+      content => $timezone::manage_file_content,
+      replace => $timezone::manage_file_replace,
+      audit   => $timezone::manage_audit,
+      noop    => $timezone::bool_noops,
+    }
+
+    if $::hardwareisa != 'sparc' and $::kernel != 'SunOS' {
+      exec { 'set-timezone':
+        command     => $timezone::real_set_timezone_command,
+        path        => '/usr/bin:/usr/sbin:/bin:/sbin',
+        require     => File['timezone'],
+        subscribe   => File['timezone'],
+        refreshonly => true,
+      }
     }
   }
 
