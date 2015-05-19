@@ -75,9 +75,16 @@ class timezone(
   $bool_audit_only=any2bool($audit_only)
   $bool_noops=any2bool($noops)
 
+  if $::operatingsystem =~ /(?i:RedHat|Centos)/ {
+    $rh_command = $::operatingsystemmajrelease ? {
+      /7/     => "timedatectl set-timezone ${timezone}",
+      default => 'tzdata-update',
+    }
+  }
+
   $real_set_timezone_command = $set_timezone_command ? {
     ''      => $::operatingsystem ? {
-      /(?i:RedHat|Centos|Scientific|Fedora|Amazon|Linux)/ => 'tzdata-update',
+      /(?i:RedHat|Centos|Scientific|Fedora|Amazon|Linux)/ => "${rh_command}",
       /(?i:Ubuntu|Debian|Mint)/                           => 'dpkg-reconfigure -f noninteractive tzdata',
       /(?i:SLES|OpenSuSE)/                                => "zic -l ${timezone}",
       /(?i:OpenBSD)/                                      => "ln -fs /usr/share/zoneinfo/${timezone} /etc/localtime",
