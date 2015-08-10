@@ -13,5 +13,6 @@ describe 'timezone' do
       :lsbdistcodename => 'Jessie'
   } }
 
+  it { should compile }
   it { should contain_class('timezone') }
 end

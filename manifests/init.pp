@@ -84,7 +84,7 @@ class timezone(
 
   $real_set_timezone_command = $set_timezone_command ? {
     ''      => $::operatingsystem ? {
-      /(?i:RedHat|Centos|Scientific|Fedora|Amazon|Linux)/ => "${rh_command}",
+      /(?i:RedHat|Centos|Scientific|Fedora|Amazon|Linux)/ => $rh_command,
       /(?i:Ubuntu|Debian|Mint)/                           => 'dpkg-reconfigure -f noninteractive tzdata',
       /(?i:SLES|OpenSuSE)/                                => "zic -l ${timezone}",
       /(?i:OpenBSD)/                                      => "ln -fs /usr/share/zoneinfo/${timezone} /etc/localtime",
