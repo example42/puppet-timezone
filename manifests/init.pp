@@ -75,7 +75,7 @@ class timezone(
   $bool_audit_only=any2bool($audit_only)
   $bool_noops=any2bool($noops)
 
-  if $::operatingsystem =~ /(?i:RedHat|Centos)/ {
+  if $::operatingsystem =~ /(?i:RedHat|Centos|Scientific|Fedora|Amazon|Linux)/ {
     $rh_command = $::operatingsystemmajrelease ? {
       /7/     => "timedatectl set-timezone ${timezone}",
       default => 'tzdata-update',
