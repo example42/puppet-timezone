@@ -20,6 +20,8 @@ class timezone::params {
   # This is calculated in timezone class
   $set_timezone_command = ''
 
+  $my_class = ''
+
   $config_file = $::operatingsystem ? {
     /(?i:RedHat|Centos|Scientific|Fedora|Amazon|Linux)/ => '/etc/sysconfig/clock',
     /(?i:Ubuntu|Debian|Mint)/                           => '/etc/timezone',
