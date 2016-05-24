@@ -94,6 +94,11 @@ class timezone(
     default => $set_timezone_command,
   }
 
+  ### Include custom class if $my_class is set
+  if $timezone::my_class and $timezone::my_class != '' {
+    include $timezone::my_class
+  }
+
   $manage_audit = $timezone::bool_audit_only ? {
     true  => 'all',
     false => undef,
