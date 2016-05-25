@@ -15,4 +15,13 @@ describe 'timezone' do
 
   it { should compile }
   it { should contain_class('timezone') }
+
+  describe 'Test customizations - custom class' do
+    let(:params) { {:my_class => "timezone::spec" } }
+    it 'should automatically include a custom class' do
+      content = catalogue.resource('file', 'timezone').send(:parameters)[:content]
+      content.should match "fqdn: rspec.example42.com"
+    end
+  end
+
 end
