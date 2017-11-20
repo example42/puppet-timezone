@@ -96,7 +96,7 @@ class timezone(
       /(?i:Ubuntu|Debian|Mint)/                           => $debian_command,
       /(?i:SLES|OpenSuSE)/                                => "zic -l ${timezone}",
       /(?i:OpenBSD)/                                      => "ln -fs /usr/share/zoneinfo/${timezone} /etc/localtime",
-      /(?i:FreeBSD)/                                      => "cp /usr/share/zoneinfo/${timezone} /etc/localtime && adjkerntz -a",
+      /(?i:FreeBSD)/                                      => "ln -sf /usr/share/zoneinfo/${timezone} /etc/localtime && adjkerntz -a",
       /(?i:Solaris)/                                      => "rtc -z ${timezone} && rtc -c",
     },
     default => $set_timezone_command,
