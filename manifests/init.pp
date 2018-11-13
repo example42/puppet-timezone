@@ -84,8 +84,8 @@ class timezone(
     }
     'Debian' : {
       $debian_command = $::operatingsystemmajrelease ? {
-        /16.04/ => "timedatectl set-timezone ${timezone}",
-        default => 'dpkg-reconfigure -f noninteractive tzdata',
+        /(^10|^11|^12|^13|^14|^15)/ => 'dpkg-reconfigure -f noninteractive tzdata',
+        default                     => "timedatectl set-timezone ${timezone}",
       }
     }
   }
