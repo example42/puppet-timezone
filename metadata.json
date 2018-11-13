@@ -1,6 +1,6 @@
 {
   "name": "example42-timezone",
-  "version": "2.0.15",
+  "version": "2.0.16",
   "summary": "Puppet module to manage timezones",
   "author": "Alessandro Franceschi",
   "description": "This module manages the timezone on different OS",
